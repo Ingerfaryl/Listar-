@@ -1,2 +1,2 @@
-#Informacion
+# Informacion
 autor: Alexis Talla SAravia
