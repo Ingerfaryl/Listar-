@@ -5,18 +5,28 @@ class productores extends Conexion{
     public function __construct(){
         $this ->pdo = parent::getConexion();
     }
-    public function search($data=[]){
+    public function getAll(){
         try{
-            $consulta = $this->pdo->prepare("CALL spu_resumen_publisher(?)");
+            $consulta = $this ->pdo-> prepare('CALL spu_publisher_listar()');
+            $consulta -> execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }   
+        catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+    public function buscarPublisher($data=[]){
+        try{
+            $consulta = $this->pdo->prepare("CALL spu_publisher_search(?)");
             $consulta->execute(
-                array($data['_idpublisher'])
+                array($data['_publisher_id'])
             );
             return $consulta->fetchall(PDO::FETCH_ASSOC);
         }catch (Exception $e){
-            die($e->getMessage());
+        die($e->getMessage());
         }
     }
 }
 /* $productor = new productores();
-$mostrar = $productor->search(["_idpublisher"=>4]);
+$mostrar = $productor->buscarPublisher(["_publisher_id"=>4]);
 var_dump($mostrar);  */
