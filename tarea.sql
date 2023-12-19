@@ -24,3 +24,17 @@ BEGIN
     FROM publisher;
 end;
 call spu_publisher_listar();
+
+
+CREATE PROCEDURE spu_resumen_alignment()
+BEGIN
+	SELECT
+	AL.alignment,
+	COUNT(SH.id) AS 'total'
+	FROM superhero SH
+	LEFT JOIN alignment AL ON AL.id = SH.alignment_id
+	GROUP BY AL.id, AL.alignment
+	ORDER BY SH.alignment_id ASC;		
+END
+CALL spu_resumen_alignment;
+
