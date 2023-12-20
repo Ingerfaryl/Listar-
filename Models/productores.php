@@ -26,7 +26,29 @@ class productores extends Conexion{
         die($e->getMessage());
         }
     }
+    public function searchListar(){
+        try{
+            $consulta = $this->pdo->prepare("CALL spu_publisher_listar()");
+            $consulta -> execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+    public function searchListarAlienacion($data=[]){
+        try{
+            $consutla = $this->pdo->prepare("CALL spu_resumen_alienacion_productor(?)");
+            $consutla -> execute(
+                array($data['idpublisher'])
+            );
+            return $consutla->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
 }
 /* $productor = new productores();
-$mostrar = $productor->buscarPublisher(["_publisher_id"=>4]);
-var_dump($mostrar);  */
+$mostrar = $productor->searchListarAlienacion(['idpublisher'=>4]);
+var_dump($mostrar); */

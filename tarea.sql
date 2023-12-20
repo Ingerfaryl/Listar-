@@ -38,3 +38,15 @@ BEGIN
 END
 CALL spu_resumen_alignment;
 
+CREATE PROCEDURE spu_resumen_alienacion_productor(IN PUBLISHER_ID INT) 
+BEGIN
+  SELECT
+	    ALG.alignment AS Alienacion,
+	    COUNT(*) AS Heroes
+	FROM superhero SUP
+	    LEFT JOIN alignment ALG ON ALG.id = SUP.alignment_id
+	WHERE SUP.publisher_id = PUBLISHER_ID
+	GROUP BY
+	    ALG.alignment;
+	END;
+call spu_resumen_alienacion_productor(2);
